@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { PortfolioPage } from "@/components/portfolio-page";
-
-const SITE_URL = "https://naufalzaki.vercel.app";
+import { SITE_URL } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "Projects",

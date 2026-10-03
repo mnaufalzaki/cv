@@ -5,6 +5,18 @@ export type LocalizedText = {
   id: string;
 };
 
+export type Project = {
+  slug: string;
+  title: string;
+  description: LocalizedText;
+  category: string;
+  year: string;
+  tags: string[];
+  github: string;
+  demo?: string;
+  featured: boolean;
+};
+
 export const profile = {
   name: "Muhammad Naufal Zaki",
   handle: "@naufallzakki",
@@ -14,11 +26,11 @@ export const profile = {
   },
   bio: {
     en: "Information Systems undergraduate at Airlangga University and BSI Scholarship awardee with experience in leadership, stakeholder coordination, partnerships, and operational project management. Developing a career at the intersection of technology, business, and organizational transformation, with interests in enterprise systems, technology risk, financial technology, and emerging technologies. Strong in communication, analytical thinking, cross-functional collaboration, and structured problem-solving.",
-    id: "Mahasiswa Sistem Informasi Universitas Airlangga sekaligus penerima beasiswa BSI Scholarship dengan pengalaman dalam kepemimpinan, koordinasi pemangku kepentingan, kemitraan strategis, dan manajemen proyek operasional. Berfokus mengembangkan karier di persimpangan teknologi, bisnis, dan transformasi organisasi, dengan minat mendalam pada sistem enterprise, manajemen risiko teknologi, financial technology, dan emerging technologies. Memiliki kemampuan yang kuat dalam komunikasi, berpikir analitis, kolaborasi lintas fungsi, serta pemecahan masalah secara terstruktur.",
+    id: "Mahasiswa Sistem Informasi di Universitas Airlangga dan penerima beasiswa BSI Scholarship. Memiliki pengalaman dalam kepemimpinan, koordinasi berbagai pihak, kemitraan strategis, serta pengelolaan proyek operasional. Tertarik mengembangkan karier yang menghubungkan teknologi, bisnis, dan perubahan organisasi, khususnya dalam sistem enterprise, risiko teknologi, fintech, dan perkembangan teknologi baru. Didukung kemampuan komunikasi, berpikir analitis, kolaborasi lintas fungsi, serta pemecahan masalah secara terstruktur.",
   },
   location: "Surabaya, Indonesia",
   email: "naufalz562@gmail.com",
-  github: "https://github.com/Skyiop1",
+  github: "https://github.com/mnaufalzaki",
   linkedin: "https://www.linkedin.com/in/naufalz/",
   cv: "/muhammad-naufal-zaki-cv.pdf",
 };
@@ -31,7 +43,7 @@ export const experiences = [
       id: "Koordinator BSI Scholarship Inspirasi UNAIR",
     },
     type: { en: "Contract", id: "Kontrak" },
-    period: "Nov 2025 — Present",
+    period: { en: "Nov 2025 — Present", id: "Nov 2025 — Sekarang" },
     location: "Surabaya",
     tags: [
       "Leadership",
@@ -69,7 +81,7 @@ export const experiences = [
       id: "Marketing & Partnerships Associate",
     },
     type: { en: "Part-time", id: "Part-time" },
-    period: "Jun 2025 — Mar 2026",
+    period: { en: "Jun 2025 — Mar 2026", id: "Jun 2025 — Mar 2026" },
     location: "Surabaya",
     tags: [
       "Partnerships",
@@ -100,7 +112,7 @@ export const experiences = [
     organization: "American Corner",
     role: { en: "Media Production", id: "Produksi Media" },
     type: { en: "Internship", id: "Magang" },
-    period: "Dec 2024 — Dec 2025",
+    period: { en: "Dec 2024 — Dec 2025", id: "Des 2024 — Des 2025" },
     location: "Surabaya",
     tags: [
       "Video Production",
@@ -130,7 +142,7 @@ export const experiences = [
     organization: "Organizing Committee, Class of 2024 SMA 1 Tawangsari",
     role: { en: "Treasurer", id: "Bendahara" },
     type: { en: "Committee", id: "Kepanitiaan" },
-    period: "Nov 2023 — May 2024",
+    period: { en: "Nov 2023 — May 2024", id: "Nov 2023 — Mei 2024" },
     location: "Sukoharjo",
     tags: ["Budgeting", "Cost Optimization", "Financial Reporting"],
     bullets: [
@@ -159,7 +171,7 @@ export const experiences = [
       id: "Penulis Skenario & Pengembangan Cerita",
     },
     type: { en: "Committee", id: "Kepanitiaan" },
-    period: "Dec 2023 — Jul 2024",
+    period: { en: "Dec 2023 — Jul 2024", id: "Des 2023 — Jul 2024" },
     location: "Sukoharjo",
     tags: ["Storytelling", "Production", "Team Coordination"],
     bullets: [
@@ -185,7 +197,7 @@ export const experiences = [
     organization: "Rohani Islam · SMA 1 Tawangsari",
     role: { en: "Public Relations", id: "Hubungan Masyarakat" },
     type: { en: "Organization", id: "Organisasi" },
-    period: "Apr 2023 — Nov 2023",
+    period: { en: "Apr 2023 — Nov 2023", id: "Apr 2023 — Nov 2023" },
     location: "Sukoharjo",
     tags: [
       "Public Relations",
@@ -210,12 +222,12 @@ export const experiences = [
 ];
 
 const repositoryBase =
-  "https://github.com/Skyiop1/CS-Fundamentals-UNAIR/tree/main";
+  "https://github.com/mnaufalzaki/CS-Fundamentals-UNAIR/tree/main";
 
-export const projects = [
+export const projects: Project[] = [
   {
     slug: "nusacarbon-blockchain-platform",
-    title: "NusaCarbon : A Blockchain-Based Carbon Credit Marketplace Platform for MRV Verification and Prevention of Double Offset Claims",
+    title: "NusaCarbon: Carbon Credit Marketplace & MRV Verification",
     description: {
       en: "A comprehensive web and mobile prototype for a blockchain-based carbon credit marketplace, engineered for transparent MRV (Measurement, Reporting, and Verification) workflows and the prevention of double offset claims.",
       id: "Prototipe platform web dan aplikasi mobile marketplace kredit karbon berbasis blockchain untuk verifikasi MRV (Measurement, Reporting, and Verification) yang transparan serta pencegahan klaim ganda (*double offset claims*) dalam perdagangan karbon.",
@@ -237,6 +249,19 @@ export const projects = [
     year: "2026",
     tags: ["Python", "Machine Learning", "Streamlit"],
     github: `${repositoryBase}/CreditDefaultRiskAI`,
+    featured: true,
+  },
+  {
+    slug: "academic-advising-decision-support-system",
+    title: "Academic Advising Decision Support System (AADSS)",
+    description: {
+      en: "A lightweight, rule-based Academic Advising Decision Support System designed for faculty academic advisors at Universitas Airlangga, featuring automated KRS credit ceiling calculations, multi-semester cohort progress tracking, milestone checkpoint risk detection, and ad-hoc advising simulation.",
+      id: "Sistem pendukung keputusan berbasis aturan yang membantu dosen wali Sistem Informasi Universitas Airlangga dalam perwalian akademik. Mendukung perhitungan batas maksimal SKS secara otomatis, pemantauan perkembangan akademik setiap angkatan dari semester ke semester, deteksi dini risiko pada evaluasi studi, serta simulasi perwalian tanpa memerlukan dataset.",
+    },
+    category: "Data & ML",
+    year: "2026",
+    tags: ["Python", "Streamlit", "Plotly", "Pandas", "Data Analytics"],
+    github: `${repositoryBase}/Academic%20Advising%20Decision%20Support%20System%20(AADSS)`,
     featured: true,
   },
   {

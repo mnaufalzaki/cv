@@ -3,8 +3,11 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "@fontsource/caveat/400.css";
 import "./globals.css";
-
-const SITE_URL = "https://naufalzaki.vercel.app";
+import { SITE_URL } from "@/lib/site-config";
+import { themeBootstrap } from "@/lib/portfolio-preferences";
+import { PortfolioPreferencesProvider } from "@/components/portfolio-preferences";
+import { PortfolioIntro } from "@/components/portfolio-intro";
+import { introBootstrap } from "@/lib/portfolio-intro";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -86,7 +89,7 @@ const personJsonLd = {
     url: "https://www.unair.ac.id/",
   },
   sameAs: [
-    "https://github.com/Skyiop1",
+    "https://github.com/mnaufalzaki",
     "https://www.linkedin.com/in/naufalz/",
   ],
   award: ["BSI Scholarship Awardee"],
@@ -121,6 +124,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="dark" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
+        <script dangerouslySetInnerHTML={{ __html: introBootstrap }} />
+      </head>
       <body className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}>
         <script
           type="application/ld+json"
@@ -134,7 +141,9 @@ export default function RootLayout({
             __html: JSON.stringify(websiteJsonLd),
           }}
         />
-        {children}
+        <PortfolioPreferencesProvider>
+          <PortfolioIntro>{children}</PortfolioIntro>
+        </PortfolioPreferencesProvider>
       </body>
     </html>
   );

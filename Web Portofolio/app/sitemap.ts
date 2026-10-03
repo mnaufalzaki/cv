@@ -1,8 +1,7 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/site-config";
 
 export const dynamic = "force-static";
-
-const SITE_URL = "https://naufalzaki.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -10,6 +10,7 @@ import {
   Check,
   Code2,
   Download,
+  ExternalLink,
   FolderKanban,
   GraduationCap,
   Home,
@@ -21,6 +22,8 @@ import {
   Sun,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { usePortfolioPreferences } from "@/components/portfolio-preferences";
+import { MotionText } from "@/components/motion-text";
 import {
   Popover,
   PopoverContent,
@@ -34,6 +37,7 @@ import {
   stackGroups,
   type Language,
   type LocalizedText,
+  type Project,
 } from "@/app/portfolio-data";
 
 function GithubIcon(props: React.SVGProps<SVGSVGElement>) {
@@ -75,12 +79,6 @@ const binaryStreams = Array.from({ length: 24 }, (_, column) =>
   ).join(""),
 );
 
-const ambientBinaryStreams = Array.from({ length: 56 }, (_, column) =>
-  Array.from({ length: 96 }, (_, row) =>
-    ((row * 5 + column * 7 + row * column) % 11) % 2 === 0 ? "0" : "1",
-  ).join(""),
-);
-
 const copy = {
   en: {
     home: "Home",
@@ -103,7 +101,7 @@ const copy = {
     learningLabIntro:
       "Coursework, technical experiments, and smaller builds documenting the fundamentals behind my larger projects.",
     source: "GitHub",
-    profileLink: "LinkedIn",
+    demo: "Live Demo",
     contactEyebrow: "Inquiries & collaboration",
     contactTitle: "Let’s learn, build, and create meaningful impact.",
     contactBody:
@@ -114,6 +112,13 @@ const copy = {
     index: "Index",
     timezone: "Asia/Jakarta · Indonesia",
     skip: "Skip to content",
+    navigation: "Primary navigation",
+    lightTheme: "Light theme",
+    darkTheme: "Dark theme",
+    portrait: "Portrait of Muhammad Naufal Zaki",
+    availability: "Open to learning and collaboration",
+    sourceLabel: "View source on GitHub",
+    demoLabel: "Open live demo",
   },
   id: {
     home: "Beranda",
@@ -136,7 +141,7 @@ const copy = {
     learningLabIntro:
       "Tugas kuliah, eksperimen teknis, dan proyek fundamental yang mendasari pengembangan sistem yang lebih besar.",
     source: "GitHub",
-    profileLink: "LinkedIn",
+    demo: "Demo Langsung",
     contactEyebrow: "Kolaborasi & Hubungan Profesional",
     contactTitle: "Mari berkolaborasi, bertukar gagasan, dan menciptakan dampak nyata.",
     contactBody:
@@ -147,6 +152,13 @@ const copy = {
     index: "Navigasi",
     timezone: "Asia/Jakarta · Indonesia",
     skip: "Lewati ke konten utama",
+    navigation: "Navigasi utama",
+    lightTheme: "Tema terang",
+    darkTheme: "Tema gelap",
+    portrait: "Foto Muhammad Naufal Zaki",
+    availability: "Terbuka untuk belajar dan berkolaborasi",
+    sourceLabel: "Lihat kode sumber di GitHub",
+    demoLabel: "Buka demo langsung",
   },
 };
 
@@ -166,7 +178,7 @@ function SectionHeading({
   return (
     <div className="section-heading">
       <h2 className="hand-label">
-        {title}
+        <MotionText text={title} />
         {count ? <sup>({count})</sup> : null}
       </h2>
       {action}
@@ -220,12 +232,12 @@ function SettingsMenu({
           <span>{t.settings}</span>
         </button>
       </PopoverTrigger>
-      <PopoverContent align="end" sideOffset={12} className="settings-popover">
+      <PopoverContent align="end" sideOffset={12} className="settings-popover" aria-label={t.settings}>
         <div className="settings-row">
           <span className="settings-label">
             <Languages aria-hidden="true" /> {t.language}
           </span>
-          <div className="segmented-control" aria-label={t.language}>
+          <div className="segmented-control" role="group" aria-label={t.language}>
             {(["en", "id"] as const).map((item) => (
               <button
                 key={item}
@@ -243,12 +255,12 @@ function SettingsMenu({
             {theme === "dark" ? <Moon aria-hidden="true" /> : <Sun aria-hidden="true" />}
             {t.theme}
           </span>
-          <div className="segmented-control" aria-label={t.theme}>
+          <div className="segmented-control" role="group" aria-label={t.theme}>
             <button
               className={theme === "light" ? "is-selected" : ""}
               onClick={() => onTheme("light")}
               aria-pressed={theme === "light"}
-              aria-label="Light theme"
+              aria-label={t.lightTheme}
             >
               <Sun aria-hidden="true" />
             </button>
@@ -256,7 +268,7 @@ function SettingsMenu({
               className={theme === "dark" ? "is-selected" : ""}
               onClick={() => onTheme("dark")}
               aria-pressed={theme === "dark"}
-              aria-label="Dark theme"
+              aria-label={t.darkTheme}
             >
               <Moon aria-hidden="true" />
             </button>
@@ -285,7 +297,7 @@ function Header({
   return (
     <>
       <header className="profile-header">
-        <div className="profile-banner" aria-hidden="true">
+        <div className="profile-banner" aria-hidden="true" data-reveal-order="0" data-motion-element>
           <div className="binary-video">
             <div className="binary-streams">
               {binaryStreams.map((stream, index) => (
@@ -304,27 +316,27 @@ function Header({
           <div className="banner-signal banner-signal-two" />
         </div>
         <div className="profile-content">
-          <div className="profile-photo-wrap">
+          <div className="profile-photo-wrap" data-reveal-order="0" data-motion-element>
             <Image
-              src="/profile.jpg"
-              alt="Portrait of Muhammad Naufal Zaki"
+              src="/profile.webp"
+              alt={t.portrait}
               className="profile-photo"
               width={256}
               height={256}
               priority
             />
           </div>
-          <div className="profile-title-row">
+          <div className="profile-title-row" data-reveal-order="1">
             <div>
-              <h1>{profile.name}</h1>
-              <p className="handle">{profile.handle}</p>
+              <h1><MotionText text={profile.name} /></h1>
+              <p className="handle"><MotionText text={profile.handle} /></p>
             </div>
-            <span className="open-badge" title="Open to learning and collaboration">
+            <span className="open-badge" role="img" aria-label={t.availability} title={t.availability} data-motion-element>
               <Check aria-hidden="true" />
             </span>
           </div>
-          <p className="profile-bio">{localize(profile.bio, language)}</p>
-          <div className="profile-meta">
+          <p className="profile-bio" data-reveal-order="2"><MotionText text={localize(profile.bio, language)} /></p>
+          <div className="profile-meta" data-reveal-order="3" data-motion-element>
             <span>
               <BriefcaseBusiness aria-hidden="true" />
               {localize(profile.title, language)}
@@ -334,7 +346,7 @@ function Header({
               {profile.location}
             </span>
           </div>
-          <div className="social-row">
+          <div className="social-row" data-reveal-order="4" data-motion-element>
             <div className="social-links-left">
               <SocialLink href={profile.github} label="GitHub">
                 <GithubIcon aria-hidden="true" />
@@ -355,14 +367,16 @@ function Header({
           </div>
         </div>
       </header>
-      <nav className="main-nav" aria-label="Primary navigation">
-        <Link className={`nav-tab ${view === "home" ? "is-active" : ""}`} href="/">
+      <nav className="main-nav" aria-label={t.navigation} data-reveal-order="5" data-motion-element>
+        <Link className={`nav-tab ${view === "home" ? "is-active" : ""}`} href="/" aria-label={t.home} aria-current={view === "home" ? "page" : undefined}>
           <Home aria-hidden="true" />
           <span>{t.home}</span>
         </Link>
         <Link
           className={`nav-tab ${view === "projects" ? "is-active" : ""}`}
           href="/projects"
+          aria-label={t.projects}
+          aria-current={view === "projects" ? "page" : undefined}
         >
           <FolderKanban aria-hidden="true" />
           <span>{t.projects}</span>
@@ -383,8 +397,8 @@ function HomeContent({ language }: { language: Language }) {
   const featuredProjects = projects.filter((project) => project.featured);
 
   return (
-    <main id="main-content">
-      <section className="content-section first-section">
+    <main id="main-content" tabIndex={-1}>
+      <section className="content-section first-section" data-reveal-order="6">
         <SectionHeading
           title={t.experience}
           count={String(experiences.length).padStart(2, "0")}
@@ -393,9 +407,9 @@ function HomeContent({ language }: { language: Language }) {
           {experiences.map((item) => (
             <details
               className="experience-item"
-              key={`${item.organization}-${item.period}`}
+              key={`${item.organization}-${item.period.en}`}
             >
-              <summary>
+              <summary data-motion-element>
                 <span className="experience-mark">
                   <BriefcaseBusiness aria-hidden="true" />
                 </span>
@@ -414,7 +428,7 @@ function HomeContent({ language }: { language: Language }) {
                   </span>
                 </span>
                 <span className="experience-period">
-                  {item.location} · {item.period}
+                  {item.location} · {localize(item.period, language)}
                 </span>
                 <span className="experience-toggle" aria-hidden="true">+</span>
               </summary>
@@ -437,26 +451,26 @@ function HomeContent({ language }: { language: Language }) {
 
       <div className="stripe-divider" />
 
-      <section className="content-section compact-section">
+      <section className="content-section compact-section" data-reveal-order="7">
         <SectionHeading title={t.education} count="01" />
         <article className="education-row">
-          <span className="education-icon"><GraduationCap aria-hidden="true" /></span>
+          <span className="education-icon" data-motion-element><GraduationCap aria-hidden="true" /></span>
           <div>
-            <h3>Universitas Airlangga</h3>
-            <p>{language === "en" ? "Undergraduate · Information Systems" : "Sarjana (S1) · Sistem Informasi"}</p>
+            <h3><MotionText text="Universitas Airlangga" /></h3>
+            <p><MotionText text={language === "en" ? "Undergraduate · Information Systems" : "Sarjana (S1) · Sistem Informasi"} /></p>
           </div>
-          <span>Jul 2024 — Jul 2028 <small>({language === "en" ? "Expected" : "Estimasi Lulus"})</small></span>
+          <span data-motion-element>Jul 2024 — Jul 2028 <small>({language === "en" ? "Expected" : "Estimasi Lulus"})</small></span>
         </article>
       </section>
 
       <div className="stripe-divider" />
 
-      <section className="content-section compact-section">
+      <section className="content-section compact-section" data-reveal-order="8">
         <SectionHeading
           title={t.featuredProjects}
           count={String(featuredProjects.length).padStart(2, "0")}
           action={
-            <Link className="section-action" href="/projects">
+            <Link className="section-action" href="/projects" data-motion-element>
               {t.viewAll} <ArrowUpRight aria-hidden="true" />
             </Link>
           }
@@ -464,13 +478,13 @@ function HomeContent({ language }: { language: Language }) {
         <div className="featured-project-list">
           {featuredProjects.map((project, index) => (
             <Link className="featured-project-row" href={`/projects#${project.slug}`} key={project.slug}>
-              <span className="project-index">{String(index + 1).padStart(2, "0")}</span>
+              <span className="project-index" data-motion-element>{String(index + 1).padStart(2, "0")}</span>
               <span className="featured-project-copy">
-                <strong>{project.title}</strong>
-                <small>{localize(project.description, language)}</small>
+                <strong><MotionText text={project.title} /></strong>
+                <small><MotionText text={localize(project.description, language)} /></small>
               </span>
-              <span className="project-year">{project.year}</span>
-              <ArrowUpRight aria-hidden="true" />
+              <span className="project-year" data-motion-element>{project.year}</span>
+              <ArrowUpRight aria-hidden="true" data-motion-element />
             </Link>
           ))}
         </div>
@@ -478,15 +492,15 @@ function HomeContent({ language }: { language: Language }) {
 
       <div className="stripe-divider" />
 
-      <section className="content-section compact-section">
+      <section className="content-section compact-section" data-reveal-order="9">
         <SectionHeading title={t.stack} count="03" />
         <div className="stack-list">
           {stackGroups.map((group) => (
             <div className="stack-row" key={group.number}>
-              <span className="stack-number">{group.number}</span>
-              <h3>{localize(group.title, language)}</h3>
+              <span className="stack-number" data-motion-element>{group.number}</span>
+              <h3><MotionText text={localize(group.title, language)} /></h3>
               <div className="tag-row">
-                {group.items.map((item) => <span className="tag" key={item}>{item}</span>)}
+                {group.items.map((item) => <span className="tag" key={item} data-motion-element>{item}</span>)}
               </div>
             </div>
           ))}
@@ -495,18 +509,65 @@ function HomeContent({ language }: { language: Language }) {
 
       <div className="stripe-divider" />
 
-      <section className="content-section compact-section">
+      <section className="content-section compact-section" data-reveal-order="10">
         <SectionHeading title={t.impact} count="04" />
         <div className="impact-grid">
           {impactStats.map((stat) => (
             <article className="impact-card" key={stat.value}>
-              <strong>{stat.value}</strong>
-              <p>{localize(stat.label, language)}</p>
+              <strong data-motion-element>{stat.value}</strong>
+              <p><MotionText text={localize(stat.label, language)} /></p>
             </article>
           ))}
         </div>
       </section>
     </main>
+  );
+}
+
+function ProjectRow({
+  project,
+  index,
+  language,
+  variant = "featured",
+}: {
+  project: Project;
+  index: number;
+  language: Language;
+  variant?: "featured" | "learning";
+}) {
+  const t = copy[language];
+  const learning = variant === "learning";
+  return (
+    <article className={`project-card${learning ? " learning-lab-card" : ""}`} id={project.slug} tabIndex={-1}>
+      <div className="project-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</div>
+      <div className="project-card-main">
+        <div className="project-card-header">
+          <div>
+            <p className="project-category">{project.category} · {project.year}</p>
+            <h3>{project.title}</h3>
+          </div>
+          <Code2 aria-hidden="true" />
+        </div>
+        <p className="project-description">{localize(project.description, language)}</p>
+        <div className="tag-row">
+          {project.tags.map((tag) => <span className="tag" key={tag}>{tag}</span>)}
+        </div>
+      </div>
+      <div className="project-links">
+        <Button asChild size="sm" variant="outline">
+          <a href={project.github} target="_blank" rel="noreferrer" aria-label={`${t.sourceLabel}: ${project.title}`}>
+            <GithubIcon aria-hidden="true" /> {t.source} <ArrowUpRight aria-hidden="true" />
+          </a>
+        </Button>
+        {project.demo && (
+          <Button asChild size="sm" variant="default">
+            <a href={project.demo} target="_blank" rel="noreferrer" aria-label={`${t.demoLabel}: ${project.title}`}>
+              <ExternalLink aria-hidden="true" /> {t.demo} <ArrowUpRight aria-hidden="true" />
+            </a>
+          </Button>
+        )}
+      </div>
+    </article>
   );
 }
 
@@ -516,83 +577,29 @@ function ProjectsContent({ language }: { language: Language }) {
   const learningLabProjects = projects.filter((project) => !project.featured);
 
   return (
-    <main id="main-content">
+    <main id="main-content" tabIndex={-1}>
       <section className="projects-intro">
         <Link href="/" className="back-link"><ArrowLeft aria-hidden="true" /> {t.home}</Link>
         <p className="eyebrow">{"// "}{t.projectEyebrow}</p>
         <h2>{t.projectTitle}</h2>
         <p>{t.projectIntro}</p>
       </section>
-
       <div className="stripe-divider" />
-
-      {/* FEATURED PROJECTS SECTION */}
-      <section className="project-catalog" aria-label={t.featuredSectionEyebrow}>
+      <section className="project-catalog" aria-labelledby="featured-projects-heading">
         <div className="project-section-header">
-          <p className="eyebrow">{"// "}{t.featuredSectionEyebrow}</p>
+          <h2 id="featured-projects-heading" className="eyebrow">{"// "}{t.featuredSectionEyebrow}</h2>
         </div>
         {featuredProjects.map((project, index) => (
-          <article className="project-card" id={project.slug} key={project.slug}>
-            <div className="project-number">{String(index + 1).padStart(2, "0")}</div>
-            <div className="project-card-main">
-              <div className="project-card-header">
-                <div>
-                  <p className="project-category">{project.category} · {project.year}</p>
-                  <h3>{project.title}</h3>
-                </div>
-                <Code2 aria-hidden="true" />
-              </div>
-              <p className="project-description">{localize(project.description, language)}</p>
-              <div className="tag-row">
-                {project.tags.map((tag) => <span className="tag" key={tag}>{tag}</span>)}
-              </div>
-            </div>
-            <div className="project-links">
-              <Button asChild size="sm" variant="outline">
-                <a href={project.github} target="_blank" rel="noreferrer">
-                  <GithubIcon aria-hidden="true" /> {t.source} <ArrowUpRight aria-hidden="true" />
-                </a>
-              </Button>
-              <Button asChild size="sm" variant="ghost">
-                <a href={profile.linkedin} target="_blank" rel="noreferrer">
-                  <LinkedinIcon aria-hidden="true" /> {t.profileLink}
-                </a>
-              </Button>
-            </div>
-          </article>
+          <ProjectRow key={project.slug} project={project} index={index} language={language} />
         ))}
       </section>
-
-      {/* LEARNING LAB SECTION */}
-      <section className="project-catalog learning-lab-section" aria-label={t.learningLabEyebrow}>
+      <section className="project-catalog learning-lab-section" aria-labelledby="learning-lab-heading">
         <div className="project-section-header learning-lab-header">
-          <p className="eyebrow">{"// "}{t.learningLabEyebrow}</p>
+          <h2 id="learning-lab-heading" className="eyebrow">{"// "}{t.learningLabEyebrow}</h2>
           <p className="learning-lab-intro">{t.learningLabIntro}</p>
         </div>
         {learningLabProjects.map((project, index) => (
-          <article className="project-card learning-lab-card" id={project.slug} key={project.slug}>
-            <div className="project-number">{String(index + 1).padStart(2, "0")}</div>
-            <div className="project-card-main">
-              <div className="project-card-header">
-                <div>
-                  <p className="project-category">{project.category} · {project.year}</p>
-                  <h3 className="learning-lab-title">{project.title}</h3>
-                </div>
-                <Code2 aria-hidden="true" />
-              </div>
-              <p className="project-description learning-lab-desc">{localize(project.description, language)}</p>
-              <div className="tag-row">
-                {project.tags.map((tag) => <span className="tag" key={tag}>{tag}</span>)}
-              </div>
-            </div>
-            <div className="project-links">
-              <Button asChild size="sm" variant="outline">
-                <a href={project.github} target="_blank" rel="noreferrer">
-                  <GithubIcon aria-hidden="true" /> {t.source} <ArrowUpRight aria-hidden="true" />
-                </a>
-              </Button>
-            </div>
-          </article>
+          <ProjectRow key={project.slug} project={project} index={index} language={language} variant="learning" />
         ))}
       </section>
     </main>
@@ -611,7 +618,7 @@ function ContactFooter({
 
   const handleScrollTop = (targetView: View) => {
     if (view === targetView) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: "auto" });
     }
   };
 
@@ -633,11 +640,11 @@ function ContactFooter({
 
   return (
     <>
-      <section className="contact-banner">
-        <p className="eyebrow">{"// "}{t.contactEyebrow}</p>
-        <h2>{t.contactTitle}</h2>
-        <p>{t.contactBody}</p>
-        <div className="contact-actions">
+      <section className="contact-banner" data-reveal-order="11">
+        <p className="eyebrow"><MotionText text={`// ${t.contactEyebrow}`} /></p>
+        <h2><MotionText text={t.contactTitle} /></h2>
+        <p><MotionText text={t.contactBody} /></p>
+        <div className="contact-actions" data-motion-element>
           <Button asChild variant="outline">
             <a href={`mailto:${profile.email}`}><Mail aria-hidden="true" /> {t.getInTouch}</a>
           </Button>
@@ -646,26 +653,26 @@ function ContactFooter({
           </Button>
         </div>
       </section>
-      <footer className="site-footer">
+      <footer className="site-footer" data-reveal-order="12">
         <div className="footer-signature">
-          <p>© 2026 {profile.name}</p>
-          <span className="braille" aria-hidden="true">⠝⠁⠥⠋⠁⠇</span>
-          <div className="footer-location">
+          <p><MotionText text={`© 2026 ${profile.name}`} /></p>
+          <span className="braille" aria-hidden="true" data-motion-element>⠝⠁⠥⠋⠁⠇</span>
+          <div className="footer-location" data-motion-element>
             <span>{time || "—:—"} · UTC+7</span>
             <span>{t.timezone}</span>
           </div>
         </div>
         <div>
-          <h3>{t.contact}</h3>
-          <ul>
+          <h3><MotionText text={t.contact} /></h3>
+          <ul data-motion-element>
             <li><a href={profile.github} target="_blank" rel="noreferrer">GitHub ↗</a></li>
             <li><a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a></li>
             <li><a href={`mailto:${profile.email}`}>Email ↗</a></li>
           </ul>
         </div>
         <div>
-          <h3>{t.index}</h3>
-          <ul>
+          <h3><MotionText text={t.index} /></h3>
+          <ul data-motion-element>
             <li>
               <Link href="/" onClick={() => handleScrollTop("home")}>
                 {t.home}
@@ -685,52 +692,19 @@ function ContactFooter({
 }
 
 export function PortfolioPage({ view }: { view: View }) {
-  const [language, setLanguageState] = useState<Language>("en");
-  const [theme, setThemeState] = useState<Theme>("dark");
-
-  useEffect(() => {
-    const savedLanguage = window.localStorage.getItem("portfolio-language");
-    const savedTheme = window.localStorage.getItem("portfolio-theme");
-    if (savedLanguage === "en" || savedLanguage === "id") {
-      setLanguageState(savedLanguage);
-      document.documentElement.lang = savedLanguage;
-    }
-    if (savedTheme === "dark" || savedTheme === "light") {
-      setThemeState(savedTheme);
-      document.documentElement.dataset.theme = savedTheme;
-    } else {
-      document.documentElement.dataset.theme = "dark";
-    }
-  }, []);
-
-  const setLanguage = (value: Language) => {
-    setLanguageState(value);
-    window.localStorage.setItem("portfolio-language", value);
-    document.documentElement.lang = value;
-  };
-
-  const setTheme = (value: Theme) => {
-    setThemeState(value);
-    document.documentElement.dataset.theme = value;
-    window.localStorage.setItem("portfolio-theme", value);
-  };
-
-  const t = useMemo(() => copy[language], [language]);
+  const { language, theme, setLanguage, setTheme } = usePortfolioPreferences();
+  const t = copy[language];
 
   return (
     <div className="site-page">
-      <a className="skip-link" href="#main-content">{t.skip}</a>
+      <a className="skip-link" href="#main-content" onClick={(event) => {
+        event.preventDefault();
+        const main = document.getElementById("main-content");
+        main?.focus({ preventScroll: true });
+        main?.scrollIntoView({ behavior: "instant", block: "start" });
+      }}>{t.skip}</a>
       <div className="ambient-dots" aria-hidden="true">
-        <div className="ambient-binary">
-          {ambientBinaryStreams.map((stream, index) => (
-            <span
-              key={index}
-              style={{ animationDelay: `${index * -0.22}s` }}
-            >
-              {stream}
-            </span>
-          ))}
-        </div>
+        <div className="ambient-binary" />
       </div>
       <div className="site-frame">
         <Header
