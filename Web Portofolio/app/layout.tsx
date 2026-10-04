@@ -12,11 +12,11 @@ import { introBootstrap } from "@/lib/portfolio-intro";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Muhammad Naufal Zaki — Information Systems Portfolio",
+    default: "Muhammad Naufal Zaki — Technology, Data & Operations",
     template: "%s | Muhammad Naufal Zaki",
   },
   description:
-    "Information Systems undergraduate at Universitas Airlangga exploring the intersection of technology, business, enterprise systems, technology risk, financial technology, and data-driven problem solving.",
+    "Information Systems undergraduate at Universitas Airlangga with experience in technology projects, data analytics, operations, partnerships, and cross-functional leadership.",
   applicationName: "Muhammad Naufal Zaki",
   authors: [
     {
@@ -45,24 +45,24 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: `${SITE_URL}/`,
     siteName: "Muhammad Naufal Zaki",
-    title: "Muhammad Naufal Zaki — Information Systems Portfolio",
+    title: "Muhammad Naufal Zaki — Technology, Data & Operations",
     description:
-      "Selected work, experience, and projects across Information Systems, technology, business, data, and emerging enterprise technologies.",
+      "Information Systems undergraduate at Universitas Airlangga with experience in technology projects, data analytics, operations, partnerships, and cross-functional leadership.",
     images: [
       {
         url: `${SITE_URL}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: "Muhammad Naufal Zaki — Information Systems Portfolio",
+        alt: "Muhammad Naufal Zaki — Technology, Data & Operations",
         type: "image/png",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Muhammad Naufal Zaki — Information Systems Portfolio",
+    title: "Muhammad Naufal Zaki — Technology, Data & Operations",
     description:
-      "Selected work, experience, and projects across Information Systems, technology, business, data, and emerging enterprise technologies.",
+      "Information Systems undergraduate at Universitas Airlangga with experience in technology projects, data analytics, operations, partnerships, and cross-functional leadership.",
     images: [`${SITE_URL}/og-image.png`],
   },
   verification: {
@@ -82,7 +82,7 @@ const personJsonLd = {
   image: `${SITE_URL}/profile.jpg`,
   jobTitle: "Information Systems Student",
   description:
-    "Information Systems undergraduate at Universitas Airlangga exploring the intersection of technology, business, enterprise systems, technology risk, financial technology, and data-driven problem solving.",
+    "Information Systems undergraduate at Universitas Airlangga with experience in technology projects, data analytics, operations, partnerships, and cross-functional leadership.",
   affiliation: {
     "@type": "EducationalOrganization",
     name: "Universitas Airlangga",
@@ -110,7 +110,7 @@ const websiteJsonLd = {
   name: "Muhammad Naufal Zaki",
   url: SITE_URL,
   description:
-    "Personal portfolio of Muhammad Naufal Zaki, an Information Systems undergraduate at Universitas Airlangga.",
+    "Information Systems undergraduate at Universitas Airlangga with experience in technology projects, data analytics, operations, partnerships, and cross-functional leadership.",
   author: {
     "@type": "Person",
     name: "Muhammad Naufal Zaki",
