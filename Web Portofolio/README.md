@@ -64,7 +64,7 @@ Website mendukung bahasa Inggris/Indonesia serta tema gelap/terang. Pilihan peng
 
 Jika penyimpanan browser diblokir, pilihan tetap berlaku selama kunjungan dan navigasi antarhalaman. Setelah reload, browser tersebut kembali menggunakan bahasa Inggris dan tema gelap. Tema tersimpan diterapkan sebelum halaman tampil.
 
-URL produksi dipusatkan di `lib/site-config.ts` dan digunakan oleh metadata, canonical, Open Graph, structured data, sitemap, dan robots. Nilai default adalah `https://naufalzaki.vercel.app`; perubahan environment memerlukan build ulang.
+URL produksi dipusatkan di `lib/site-config.ts` dan digunakan oleh metadata, canonical, Open Graph, structured data, sitemap, dan robots. Nilai default adalah `https://naufalzaki.tech`; perubahan environment memerlukan build ulang.
 
 ## Intro dan kemunculan Home
 
