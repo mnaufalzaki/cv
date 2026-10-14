@@ -92,10 +92,10 @@ const copy = {
     viewAll: "View all",
     stack: "Stack & capabilities",
     impact: "Selected impact",
-    projectEyebrow: "Academic & personal work",
-    projectTitle: "Projects built while learning in public.",
+    projectEyebrow: "PROJECTS & EXPLORATION",
+    projectTitle: "Learning, experimenting, and building through projects.",
     projectIntro:
-      "A growing collection of Information Systems coursework and practical experiments across data, machine learning, mobile, and web development.",
+      "A collection of projects developed from personal needs, academic work, and technology exploration. Each project is part of my learning journey in Software development, data analysis, AI, and machine learning.",
     featuredSectionEyebrow: "Featured Projects",
     learningLabEyebrow: "Learning Lab",
     learningLabIntro:
@@ -132,10 +132,10 @@ const copy = {
     viewAll: "Lihat Semua",
     stack: "Keahlian & Kapabilitas",
     impact: "Dampak Terpilih",
-    projectEyebrow: "Karya Akademik & Eksperimen",
-    projectTitle: "Proyek yang dikembangkan melalui eksplorasi dan proses belajar terbuka.",
+    projectEyebrow: "PROYEK & EKSPLORASI",
+    projectTitle: "Belajar, bereksperimen, dan membangun lewat proyek.",
     projectIntro:
-      "Koleksi tugas akademik Sistem Informasi dan proyek eksplorasi praktis di bidang analisis data, machine learning, pengembangan aplikasi mobile, dan web.",
+      "Kumpulan proyek yang saya kembangkan dari kebutuhan pribadi, tugas akademik, dan eksplorasi teknologi. Setiap karya menjadi bagian dari proses belajar saya dalam pengembangan software, analisis data, AI, dan machine learning.",
     featuredSectionEyebrow: "Proyek Pilihan",
     learningLabEyebrow: "Learning Lab",
     learningLabIntro:

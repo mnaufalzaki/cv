@@ -224,31 +224,47 @@ export const experiences = [
 const repositoryBase =
   "https://github.com/mnaufalzaki/CS-Fundamentals-UNAIR/tree/main";
 
+const personalRepositoryBase =
+  "https://github.com/mnaufalzaki/Project-Portfolio/tree/main";
+
 export const projects: Project[] = [
+  {
+    slug: "yaping",
+    title: "Yaping: Voice Dictation for macOS",
+    description: {
+      en: "A native macOS dictation app that turns speech into text directly in the application being used. Designed for a mix of Indonesian and English, with cloud or offline transcription options, processing while recording, and automatic AI switching when a failure occurs.",
+      id: "Aplikasi dikte native macOS yang mengubah ucapan menjadi teks langsung di aplikasi yang sedang digunakan. Dirancang untuk bahasa campuran Indonesia dan Inggris, dengan pilihan transkripsi cloud atau offline, pemrosesan sambil merekam, dan perpindahan AI otomatis saat terjadi kegagalan.",
+    },
+    category: "macOS App",
+    year: "2026",
+    tags: ["Swift", "AppKit", "SwiftUI", "whisper.cpp"],
+    github: `${personalRepositoryBase}/Yaping`,
+    featured: true,
+  },
   {
     slug: "nusacarbon-blockchain-platform",
     title: "NusaCarbon: Carbon Credit Marketplace & MRV Verification",
     description: {
-      en: "A comprehensive web and mobile prototype for a blockchain-based carbon credit marketplace, engineered for transparent MRV (Measurement, Reporting, and Verification) workflows and the prevention of double offset claims.",
-      id: "Prototipe platform web dan aplikasi mobile marketplace kredit karbon berbasis blockchain untuk verifikasi MRV (Measurement, Reporting, and Verification) yang transparan serta pencegahan klaim ganda (*double offset claims*) dalam perdagangan karbon.",
+      en: "A web and mobile carbon credit marketplace prototype connecting project owners, buyers, verifiers, and administrators. Supports project submissions, MRV verification, token issuance and transactions, and carbon credit retirement, with a simulated ledger using transaction hashes.",
+      id: "Prototipe marketplace kredit karbon berbasis web dan mobile yang menghubungkan pemilik proyek, pembeli, verifikator, dan administrator. Mendukung pengajuan proyek, verifikasi MRV, penerbitan dan transaksi token, serta retirement kredit karbon, dengan simulasi ledger menggunakan hash transaksi.",
     },
     category: "Web & Mobile",
     year: "2026",
-    tags: ["Java", "Dart", "Flutter", "Prototype", "Web App"],
+    tags: ["Java", "Dart", "Flutter", "Prototype", "Web App", "PHP", "MySQL"],
     github: `${repositoryBase}/NusaCarbonWEB`,
     featured: true,
   },
   {
-    slug: "credit-default-risk-ai",
-    title: "Credit Default Risk AI",
+    slug: "stock-price-prediction-ga-rf",
+    title: "BBCA Stock Direction Modeling: Genetic Algorithm & Random Forest",
     description: {
-      en: "A machine-learning project exploring credit default risk through structured data and model-driven analysis.",
-      id: "Pengembangan model machine learning untuk memprediksi dan menganalisis risiko gagal bayar kredit berdasarkan data terstruktur.",
+      en: "An empirical machine-learning study leveraging Genetic Algorithms for optimal feature selection in Random Forest models to classify daily price movement trends on Bank Central Asia (BBCA.JK) equities.",
+      id: "Studi komparasi machine learning yang memanfaatkan Genetic Algorithm untuk seleksi fitur optimal pada model Random Forest dalam mengklasifikasikan tren pergerakan saham Bank Central Asia (BBCA.JK).",
     },
     category: "Data & ML",
     year: "2026",
-    tags: ["Python", "Machine Learning", "Streamlit"],
-    github: `${repositoryBase}/CreditDefaultRiskAI`,
+    tags: ["Python", "Genetic Algorithm", "Random Forest", "Finance"],
+    github: `${repositoryBase}/Stock%20Price%20Prediction%20(GA%20%2B%20RF)`,
     featured: true,
   },
   {
@@ -265,16 +281,29 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    slug: "stock-price-prediction-ga-rf",
-    title: "Stock Trend Classification with Genetic Algorithm & Random Forest",
+    slug: "credit-default-risk-ai",
+    title: "Credit Default Risk AI",
     description: {
-      en: "An empirical machine-learning study leveraging Genetic Algorithms for optimal feature selection in Random Forest models to classify daily price movement trends on Bank Central Asia (BBCA.JK) equities.",
-      id: "Studi komparasi machine learning yang memanfaatkan Genetic Algorithm untuk seleksi fitur optimal pada model Random Forest dalam mengklasifikasikan tren pergerakan saham Bank Central Asia (BBCA.JK).",
+      en: "A credit default risk analysis dashboard comparing DNN and Hybrid PCA-DNN models across three train-test split scenarios. Supports model evaluation, individual predictions based on 23 customer attributes, and prediction history stored in SQLite.",
+      id: "Dashboard analisis risiko gagal bayar kredit yang membandingkan model DNN dan Hybrid PCA-DNN pada tiga skenario pembagian data. Mendukung evaluasi model, prediksi individual berdasarkan 23 atribut nasabah, serta riwayat prediksi menggunakan SQLite.",
     },
     category: "Data & ML",
     year: "2026",
-    tags: ["Python", "Genetic Algorithm", "Random Forest", "Finance"],
-    github: `${repositoryBase}/Stock%20Price%20Prediction%20(GA%20%2B%20RF)`,
+    tags: ["Python", "Machine Learning", "Streamlit"],
+    github: `${repositoryBase}/CreditDefaultRiskAI`,
+    featured: true,
+  },
+  {
+    slug: "showup",
+    title: "ShowUp: Daily Consistency Tracker",
+    description: {
+      en: "A web app for building consistency in four daily habits through an 18-week heatmap and an animated hold-to-check-in interaction. Can be installed on phones and laptops, supports offline activity, and synchronizes across devices using Supabase.",
+      id: "Aplikasi web untuk membangun konsistensi empat kebiasaan harian melalui heatmap 18 minggu dan interaksi tahan untuk check-in dengan animasi. Dapat dipasang di HP maupun laptop, mendukung aktivitas offline, sinkronisasi antarperangkat menggunakan Supabase.",
+    },
+    category: "Web App",
+    year: "2026",
+    tags: ["HTML/CSS", "JavaScript", "Supabase", "PostgreSQL"],
+    github: `${personalRepositoryBase}/ShowUp-Web`,
     featured: true,
   },
   {
@@ -288,7 +317,7 @@ export const projects: Project[] = [
     year: "2026",
     tags: ["Python", "Clustering", "Data Analysis"],
     github: `${repositoryBase}/Clustering%20%26%20Customer%20Segmentation`,
-    featured: true,
+    featured: false,
   },
   {
     slug: "car-price-prediction",
