@@ -263,7 +263,7 @@ export const projects: Project[] = [
     },
     category: "System Design & MVP Concept",
     year: "2026",
-    tags: ["System Design", "Canva"],
+    tags: ["Python", "Canva"],
     github: `${personalRepositoryBase}/ARUS`,
     featured: true,
   },
