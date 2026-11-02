@@ -250,8 +250,21 @@ export const projects: Project[] = [
     },
     category: "Product Concept & UI/UX",
     year: "2026",
-    tags: ["UI/UX Design", "Gamification", "Microlearning", "Islamic Finance"],
+    tags: ["UI/UX", "Canva"],
     github: `${personalRepositoryBase}/Z-Sharia`,
+    featured: true,
+  },
+  {
+    slug: "arus",
+    title: "ARUS: Energy-Aware Compute Intelligence",
+    description: {
+      en: "A system concept and MVP design for recommending compute nodes based on predicted energy use and runtime requirements. Covers node telemetry, workload profiling, prediction models, and a validation plan for machines with different hardware. Includes a technical architecture and pitch deck, with the project at the concept and technical-design stage.",
+      id: "Konsep sistem dan rancangan MVP untuk merekomendasikan mesin komputasi berdasarkan perkiraan konsumsi energi dan kebutuhan waktu eksekusi. Mencakup pemantauan kondisi mesin, profil beban kerja, model prediksi, serta rencana validasi pada perangkat dengan spesifikasi berbeda. Dilengkapi arsitektur teknis dan pitch deck, dengan proyek pada tahap konsep dan perancangan teknis.",
+    },
+    category: "System Design & MVP Concept",
+    year: "2026",
+    tags: ["System Design", "Canva"],
+    github: `${personalRepositoryBase}/ARUS`,
     featured: true,
   },
   {
