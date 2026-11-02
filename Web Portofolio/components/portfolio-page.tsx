@@ -117,7 +117,7 @@ const copy = {
     darkTheme: "Dark theme",
     portrait: "Portrait of Muhammad Naufal Zaki",
     availability: "Open to learning and collaboration",
-    sourceLabel: "View source on GitHub",
+    sourceLabel: "View project on GitHub",
     demoLabel: "Open live demo",
   },
   id: {
@@ -157,7 +157,7 @@ const copy = {
     darkTheme: "Tema gelap",
     portrait: "Foto Muhammad Naufal Zaki",
     availability: "Terbuka untuk belajar dan berkolaborasi",
-    sourceLabel: "Lihat kode sumber di GitHub",
+    sourceLabel: "Lihat proyek di GitHub",
     demoLabel: "Buka demo langsung",
   },
 };

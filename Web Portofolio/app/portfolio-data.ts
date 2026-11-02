@@ -242,6 +242,19 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    slug: "z-sharia",
+    title: "Z-Sharia: Gamified Islamic Finance Learning",
+    description: {
+      en: "A learning app concept and UI design for Muslim university students to explore Islamic economics and finance through short lessons, everyday cases, and quizzes. Includes seven screen mockups, a learning path, and gamification through XP, streaks, badges, and leagues. The project is at the concept and interface-design stage.",
+      id: "Konsep aplikasi dan desain antarmuka untuk membantu mahasiswa Muslim mempelajari ekonomi dan keuangan syariah melalui materi singkat, kasus sehari-hari, dan kuis. Mencakup tujuh rancangan layar, jalur belajar, serta gamifikasi melalui XP, streak, lencana, dan liga. Proyek berada pada tahap konsep dan desain antarmuka.",
+    },
+    category: "Product Concept & UI/UX",
+    year: "2026",
+    tags: ["UI/UX Design", "Gamification", "Microlearning", "Islamic Finance"],
+    github: `${personalRepositoryBase}/Z-Sharia`,
+    featured: true,
+  },
+  {
     slug: "nusacarbon-blockchain-platform",
     title: "NusaCarbon: Carbon Credit Marketplace & MRV Verification",
     description: {
@@ -291,7 +304,7 @@ export const projects: Project[] = [
     year: "2026",
     tags: ["Python", "Machine Learning", "Streamlit"],
     github: `${repositoryBase}/CreditDefaultRiskAI`,
-    featured: true,
+    featured: false,
   },
   {
     slug: "showup",
@@ -304,7 +317,7 @@ export const projects: Project[] = [
     year: "2026",
     tags: ["HTML/CSS", "JavaScript", "Supabase", "PostgreSQL"],
     github: `${personalRepositoryBase}/ShowUp-Web`,
-    featured: true,
+    featured: false,
   },
   {
     slug: "customer-segmentation",
