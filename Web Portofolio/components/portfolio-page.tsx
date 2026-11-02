@@ -297,8 +297,8 @@ function Header({
   return (
     <>
       <header className="profile-header">
-        <div className="profile-banner" aria-hidden="true" data-reveal-order="0" data-motion-element>
-          <div className="binary-video">
+        <div className="profile-banner" aria-hidden="true" data-reveal-order="0" data-ascii="surface">
+          <div className="binary-video" data-ascii="skip">
             <div className="binary-streams">
               {binaryStreams.map((stream, index) => (
                 <span
@@ -316,7 +316,7 @@ function Header({
           <div className="banner-signal banner-signal-two" />
         </div>
         <div className="profile-content">
-          <div className="profile-photo-wrap" data-reveal-order="0" data-motion-element>
+          <div className="profile-photo-wrap" data-reveal-order="0" data-ascii="surface">
             <Image
               src="/profile.webp"
               alt={t.portrait}
@@ -331,12 +331,12 @@ function Header({
               <h1><MotionText text={profile.name} /></h1>
               <p className="handle"><MotionText text={profile.handle} /></p>
             </div>
-            <span className="open-badge" role="img" aria-label={t.availability} title={t.availability} data-motion-element>
+            <span className="open-badge" role="img" aria-label={t.availability} title={t.availability}>
               <Check aria-hidden="true" />
             </span>
           </div>
           <p className="profile-bio" data-reveal-order="2"><MotionText text={localize(profile.bio, language)} /></p>
-          <div className="profile-meta" data-reveal-order="3" data-motion-element>
+          <div className="profile-meta" data-reveal-order="3">
             <span>
               <BriefcaseBusiness aria-hidden="true" />
               {localize(profile.title, language)}
@@ -346,7 +346,7 @@ function Header({
               {profile.location}
             </span>
           </div>
-          <div className="social-row" data-reveal-order="4" data-motion-element>
+          <div className="social-row" data-reveal-order="4" data-ascii="fade">
             <div className="social-links-left">
               <SocialLink href={profile.github} label="GitHub">
                 <GithubIcon aria-hidden="true" />
@@ -367,7 +367,7 @@ function Header({
           </div>
         </div>
       </header>
-      <nav className="main-nav" aria-label={t.navigation} data-reveal-order="5" data-motion-element>
+      <nav className="main-nav" aria-label={t.navigation} data-reveal-order="5" data-ascii="fade">
         <Link className={`nav-tab ${view === "home" ? "is-active" : ""}`} href="/" aria-label={t.home} aria-current={view === "home" ? "page" : undefined}>
           <Home aria-hidden="true" />
           <span>{t.home}</span>
@@ -409,7 +409,7 @@ function HomeContent({ language }: { language: Language }) {
               className="experience-item"
               key={`${item.organization}-${item.period.en}`}
             >
-              <summary data-motion-element>
+              <summary>
                 <span className="experience-mark">
                   <BriefcaseBusiness aria-hidden="true" />
                 </span>
@@ -454,12 +454,12 @@ function HomeContent({ language }: { language: Language }) {
       <section className="content-section compact-section" data-reveal-order="7">
         <SectionHeading title={t.education} count="01" />
         <article className="education-row">
-          <span className="education-icon" data-motion-element><GraduationCap aria-hidden="true" /></span>
+          <span className="education-icon"><GraduationCap aria-hidden="true" /></span>
           <div>
             <h3><MotionText text="Universitas Airlangga" /></h3>
             <p><MotionText text={language === "en" ? "Undergraduate · Information Systems" : "Sarjana (S1) · Sistem Informasi"} /></p>
           </div>
-          <span data-motion-element>Jul 2024 — Jul 2028 <small>({language === "en" ? "Expected" : "Estimasi Lulus"})</small></span>
+          <span>Jul 2024 — Jul 2028 <small>({language === "en" ? "Expected" : "Estimasi Lulus"})</small></span>
         </article>
       </section>
 
@@ -470,7 +470,7 @@ function HomeContent({ language }: { language: Language }) {
           title={t.featuredProjects}
           count={String(featuredProjects.length).padStart(2, "0")}
           action={
-            <Link className="section-action" href="/projects" data-motion-element>
+            <Link className="section-action" href="/projects">
               {t.viewAll} <ArrowUpRight aria-hidden="true" />
             </Link>
           }
@@ -478,13 +478,13 @@ function HomeContent({ language }: { language: Language }) {
         <div className="featured-project-list">
           {featuredProjects.map((project, index) => (
             <Link className="featured-project-row" href={`/projects#${project.slug}`} key={project.slug}>
-              <span className="project-index" data-motion-element>{String(index + 1).padStart(2, "0")}</span>
+              <span className="project-index">{String(index + 1).padStart(2, "0")}</span>
               <span className="featured-project-copy">
                 <strong><MotionText text={project.title} /></strong>
                 <small><MotionText text={localize(project.description, language)} /></small>
               </span>
-              <span className="project-year" data-motion-element>{project.year}</span>
-              <ArrowUpRight aria-hidden="true" data-motion-element />
+              <span className="project-year">{project.year}</span>
+              <ArrowUpRight aria-hidden="true" />
             </Link>
           ))}
         </div>
@@ -497,10 +497,10 @@ function HomeContent({ language }: { language: Language }) {
         <div className="stack-list">
           {stackGroups.map((group) => (
             <div className="stack-row" key={group.number}>
-              <span className="stack-number" data-motion-element>{group.number}</span>
+              <span className="stack-number">{group.number}</span>
               <h3><MotionText text={localize(group.title, language)} /></h3>
               <div className="tag-row">
-                {group.items.map((item) => <span className="tag" key={item} data-motion-element>{item}</span>)}
+                {group.items.map((item) => <span className="tag" key={item}>{item}</span>)}
               </div>
             </div>
           ))}
@@ -514,7 +514,7 @@ function HomeContent({ language }: { language: Language }) {
         <div className="impact-grid">
           {impactStats.map((stat) => (
             <article className="impact-card" key={stat.value}>
-              <strong data-motion-element>{stat.value}</strong>
+              <strong>{stat.value}</strong>
               <p><MotionText text={localize(stat.label, language)} /></p>
             </article>
           ))}
@@ -644,7 +644,7 @@ function ContactFooter({
         <p className="eyebrow"><MotionText text={`// ${t.contactEyebrow}`} /></p>
         <h2><MotionText text={t.contactTitle} /></h2>
         <p><MotionText text={t.contactBody} /></p>
-        <div className="contact-actions" data-motion-element>
+        <div className="contact-actions">
           <Button asChild variant="outline">
             <a href={`mailto:${profile.email}`}><Mail aria-hidden="true" /> {t.getInTouch}</a>
           </Button>
@@ -656,15 +656,15 @@ function ContactFooter({
       <footer className="site-footer" data-reveal-order="12">
         <div className="footer-signature">
           <p><MotionText text={`© 2026 ${profile.name}`} /></p>
-          <span className="braille" aria-hidden="true" data-motion-element>⠝⠁⠥⠋⠁⠇</span>
-          <div className="footer-location" data-motion-element>
+          <span className="braille" aria-hidden="true">⠝⠁⠥⠋⠁⠇</span>
+          <div className="footer-location">
             <span>{time || "—:—"} · UTC+7</span>
             <span>{t.timezone}</span>
           </div>
         </div>
         <div>
           <h3><MotionText text={t.contact} /></h3>
-          <ul data-motion-element>
+          <ul>
             <li><a href={profile.github} target="_blank" rel="noreferrer">GitHub ↗</a></li>
             <li><a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a></li>
             <li><a href={`mailto:${profile.email}`}>Email ↗</a></li>
@@ -672,7 +672,7 @@ function ContactFooter({
         </div>
         <div>
           <h3><MotionText text={t.index} /></h3>
-          <ul data-motion-element>
+          <ul>
             <li>
               <Link href="/" onClick={() => handleScrollTop("home")}>
                 {t.home}

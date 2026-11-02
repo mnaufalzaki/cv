@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useSyncExternalStore } from "react";
 import type { gsap as Gsap } from "gsap";
+import { createAsciiReveal, type AsciiRevealController } from "ascii-reveal/core";
 import { usePathname } from "next/navigation";
 import { usePortfolioPreferences } from "@/components/portfolio-preferences";
 import { INTRO_FONT_WAIT_MS, INTRO_RUNNING_TIMEOUT_MS } from "@/lib/portfolio-intro";
@@ -31,6 +32,7 @@ export function PortfolioIntro({ children }: { children: React.ReactNode }) {
     let cancelled = false;
     let keyboardUsed = false;
     let context: ReturnType<typeof Gsap.context> | undefined;
+    let ascii: AsciiRevealController | undefined;
     let fontTimer: ReturnType<typeof setTimeout> | undefined;
     let watchdog: ReturnType<typeof setTimeout> | undefined;
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -42,10 +44,13 @@ export function PortfolioIntro({ children }: { children: React.ReactNode }) {
       clearTimeout(watchdog);
       root.removeAttribute("data-intro");
       root.removeAttribute("data-intro-reveal");
-      root.removeAttribute("data-page-entering");
       root.removeAttribute("data-intro-keyboard");
       site.inert = false;
       context?.revert();
+      if (keyboard) {
+        ascii?.destroy();
+        ascii = undefined;
+      }
       intro.removeAttribute("data-scene");
       if (keyboard) document.querySelector<HTMLAnchorElement>(".skip-link")?.focus({ preventScroll: true });
     };
@@ -65,6 +70,8 @@ export function PortfolioIntro({ children }: { children: React.ReactNode }) {
       // Once the overlay ends, typing or opening Settings should keep focus
       // where the visitor put it and immediately finish the remaining reveal.
       if (!root.hasAttribute("data-intro")) {
+        ascii?.destroy();
+        ascii = undefined;
         finish(false);
         return;
       }
@@ -103,14 +110,31 @@ export function PortfolioIntro({ children }: { children: React.ReactNode }) {
         return;
       }
       root.dataset.intro = "running";
-      root.dataset.pageEntering = "true";
-      watchdog = setTimeout(() => finish(), INTRO_RUNNING_TIMEOUT_MS);
+      watchdog = setTimeout(() => {
+        ascii?.destroy();
+        ascii = undefined;
+        finish();
+      }, INTRO_RUNNING_TIMEOUT_MS);
+      ascii = createAsciiReveal(site, {
+        preset: "decode",
+        duration: "cinematic",
+        // Add roughly 300 ms to the original cinematic media transition.
+        speed: 0.363,
+        origin: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
+        selector: "[data-reveal-order]",
+        lazy: true,
+      });
       context = gsap.context(() => {}, intro);
       context.add(() => {
         createPortfolioTimeline(gsap, {
           intro,
           site,
-          onFade: () => { root.dataset.introReveal = "true"; },
+          onFade: () => {
+            root.dataset.introReveal = "true";
+            // Start behind the fading overlay so the page never flashes fully
+            // visible before its ASCII content begins decoding.
+            void ascii?.reveal();
+          },
           onOverlayComplete: () => {
             root.removeAttribute("data-intro");
             root.removeAttribute("data-intro-reveal");
@@ -131,10 +155,10 @@ export function PortfolioIntro({ children }: { children: React.ReactNode }) {
       if (context) {
         root.removeAttribute("data-intro");
         root.removeAttribute("data-intro-reveal");
-        root.removeAttribute("data-page-entering");
         site.inert = false;
         context.revert();
       }
+      ascii?.destroy();
       document.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("hashchange", onLocationChange);
       window.removeEventListener("popstate", onLocationChange);

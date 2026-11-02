@@ -4,7 +4,6 @@ import {
   BACKGROUND_REVEAL_DURATION_MS,
   INTRO_DURATION_MS,
   INTRO_WELCOME_DURATION_MS,
-  PAGE_REVEAL_START_MS,
 } from "./portfolio-intro";
 
 type MotionElements = {
@@ -44,17 +43,8 @@ export function createPortfolioTimeline(gsap: typeof Gsap, elements: MotionEleme
   const { "--intro-ink": darkInk, ...darkSurfaces } = darkPalette;
   const { "--intro-ink": lightInk, ...lightSurfaces } = lightPalette;
   const phase = (value: string) => { intro.dataset.scene = value; };
-  const blocks = Array.from(site.querySelectorAll<HTMLElement>("[data-reveal-order]"));
-  const objectsIn = (block: HTMLElement) => [
-    ...(block.hasAttribute("data-motion-element") ? [block] : []),
-    ...block.querySelectorAll<HTMLElement>("[data-motion-element]"),
-  ];
-  const words = site.querySelectorAll<HTMLElement>(".motion-word");
   const background = site.querySelector<HTMLElement>(".ambient-dots");
-  const objects = blocks.flatMap(objectsIn);
   if (background) gsap.set(background, { opacity: 0 });
-  gsap.set(words, { opacity: 0, y: 14 });
-  gsap.set(objects, { opacity: 0, y: 14 });
   gsap.set(select(".intro-to, .intro-name, .intro-portfolio"), { opacity: 0, yPercent: 110 });
   gsap.set(select(".intro-to-mask"), { x: toLeft });
   gsap.set(select(".intro-name-mask"), { x: nameLeft });
@@ -98,16 +88,7 @@ export function createPortfolioTimeline(gsap: typeof Gsap, elements: MotionEleme
     .to(select(".intro-rule-bottom"), { xPercent: -5, scaleX: 0.9, duration: 0.9 }, nameScene)
     .call(() => { phase("fade"); onFade(); }, [], fadeStart)
     .to(intro, { opacity: 0, duration: 1.5, ease: "power2.inOut" }, fadeStart)
-    .call(onOverlayComplete, [], INTRO_DURATION_MS / 1000)
-    .call(() => phase("page"), [], PAGE_REVEAL_START_MS / 1000);
-
-  for (const block of blocks) {
-    const start = PAGE_REVEAL_START_MS / 1000 + Number(block.dataset.revealOrder) * 0.1;
-    const blockWords = block.querySelectorAll<HTMLElement>(".motion-word");
-    const blockObjects = objectsIn(block);
-    if (blockWords.length) tl.to(blockWords, { opacity: 1, y: 0, duration: 0.55, stagger: { amount: 0.45 } }, start);
-    if (blockObjects.length) tl.to(blockObjects, { opacity: 1, y: 0, duration: 0.55, stagger: { amount: 0.18 } }, start);
-  }
+    .call(onOverlayComplete, [], INTRO_DURATION_MS / 1000);
   // Let the profile appear first, then introduce the peripheral binary field.
   // Keeping this tween in the same context restores it on skip or navigation.
   if (background) tl.to(background, {

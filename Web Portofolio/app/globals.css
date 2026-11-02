@@ -1500,6 +1500,13 @@ html[data-intro] .intro-site {
   pointer-events: none;
   animation: intro-content-release 4.5s step-end forwards;
 }
+.intro-site {
+  position: relative;
+  --ascii-accent: var(--signal);
+  --ascii-flash: var(--signal);
+  --ascii-glyph: var(--muted-foreground);
+  --ascii-font: var(--font-geist-mono), monospace;
+}
 html[data-intro="running"] { animation: intro-running-scroll-release 12s step-end forwards; }
 html[data-intro="running"] .intro-site { animation: intro-running-content-release 12s step-end forwards; }
 html[data-intro] .ambient-dots { opacity: 0; }
@@ -1643,16 +1650,6 @@ html[data-intro="running"] .portfolio-intro { animation: intro-running-overlay-r
   max-width: 100%;
   overflow-wrap: anywhere;
 }
-/* A delayed CSS override releases inline GSAP styles if its ticker fails. */
-html[data-page-entering] .intro-site .motion-word,
-html[data-page-entering] .intro-site [data-motion-element] {
-  animation: page-motion-release 0.001s step-end 12s forwards;
-}
-html[data-page-entering] .intro-site .ambient-dots {
-  animation: page-background-release 0.001s step-end 12s forwards;
-}
-@keyframes page-background-release { to { opacity: 1; } }
-@keyframes page-motion-release { to { opacity: 1; transform: none; } }
 @keyframes intro-scroll-release { to { overflow: auto; } }
 @keyframes intro-content-release { to { visibility: visible; pointer-events: auto; } }
 @keyframes intro-overlay-release { to { visibility: hidden; pointer-events: none; } }
