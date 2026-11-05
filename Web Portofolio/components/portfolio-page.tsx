@@ -659,11 +659,13 @@ function ContactFooter({
           <p><MotionText text={`© 2026 ${profile.name}`} /></p>
           <div className="footer-marks" data-ascii="skip">
             <span className="braille" aria-hidden="true">⠝⠁⠥⠋⠁⠇</span>
-            <PersonalSpaces language={language} />
           </div>
           <div className="footer-location">
             <span>{time || "—:—"} · UTC+7</span>
             <span>{t.timezone}</span>
+          </div>
+          <div className="personal-spaces-entrance" data-ascii="skip">
+            <PersonalSpaces language={language} />
           </div>
         </div>
         <div>

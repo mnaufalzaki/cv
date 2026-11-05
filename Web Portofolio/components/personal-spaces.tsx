@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { AsciiReveal } from "ascii-reveal";
 import { ArrowUpRight } from "lucide-react";
 import { personalSpaces } from "@/app/personal-spaces";
@@ -13,58 +13,112 @@ const copy = {
     discovery: "Kamu memperhatikan hal kecil.",
     title: "Ruang kecil",
     close: "Tutup ruang kecil",
+    hint: "Arahkan kursor atau fokus ke titik selama 8 detik. Di layar sentuh, ketuk lalu tunggu 8 detik.",
   },
   en: {
     label: "Explore Naufal’s personal spaces",
     discovery: "You noticed the little things.",
     title: "A little space",
     close: "Close personal spaces",
+    hint: "Hover or focus on the dot for 8 seconds. On a touch screen, tap and wait 8 seconds.",
   },
 };
 
 export function PersonalSpaces({ language }: { language: Language }) {
   const [open, setOpen] = useState(false);
-  const hoverTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const [waiting, setWaiting] = useState(false);
+  const waitTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const waitOrigin = useRef<"hover" | "focus" | "tap" | undefined>(undefined);
+  const trigger = useRef<HTMLButtonElement>(null);
   const openedByHover = useRef(false);
+  const restoringFocus = useRef(false);
+  const hintId = useId();
   const t = copy[language];
 
-  const clearHover = () => {
-    clearTimeout(hoverTimer.current);
-    hoverTimer.current = undefined;
+  const cancelWait = useCallback(() => {
+    clearTimeout(waitTimer.current);
+    waitTimer.current = undefined;
+    waitOrigin.current = undefined;
+    setWaiting(false);
+  }, []);
+
+  const startWait = (origin: "hover" | "focus" | "tap") => {
+    if (open || waitTimer.current !== undefined) return;
+    waitOrigin.current = origin;
+    setWaiting(true);
+    waitTimer.current = setTimeout(() => {
+      const button = trigger.current;
+      const rect = button?.getBoundingClientRect();
+      const visible = rect && rect.bottom > 0 && rect.top < window.innerHeight &&
+        rect.right > 0 && rect.left < window.innerWidth;
+      const stillAttending = origin === "tap" || (origin === "hover"
+        ? button?.matches(":hover") : document.activeElement === button);
+      cancelWait();
+      if (!visible || !stillAttending || document.visibilityState !== "visible") return;
+      openedByHover.current = origin === "hover";
+      setOpen(true);
+    }, 8000);
   };
 
-  useEffect(() => () => clearTimeout(hoverTimer.current), []);
+  useEffect(() => {
+    const outside = (event: PointerEvent) => {
+      if (!trigger.current?.contains(event.target as Node)) cancelWait();
+    };
+    const visibility = () => {
+      if (document.visibilityState !== "visible") cancelWait();
+    };
+    document.addEventListener("pointerdown", outside);
+    document.addEventListener("visibilitychange", visibility);
+    return () => {
+      clearTimeout(waitTimer.current);
+      document.removeEventListener("pointerdown", outside);
+      document.removeEventListener("visibilitychange", visibility);
+    };
+  }, [cancelWait]);
 
   return (
     <Popover open={open} onOpenChange={(value) => {
-      clearHover();
-      setOpen(value);
+      // Only the completed attention timer can open the panel.
+      if (!value) {
+        cancelWait();
+        setOpen(false);
+      }
     }}>
       <PopoverTrigger asChild>
         <button
+          ref={trigger}
           type="button"
           className="personal-spaces-trigger"
           aria-label={t.label}
+          aria-describedby={hintId}
+          aria-busy={waiting}
           onPointerEnter={(event) => {
-            if (event.pointerType !== "mouse" || open) return;
-            clearHover();
-            hoverTimer.current = setTimeout(() => {
-              openedByHover.current = true;
-              setOpen(true);
-            }, 1500);
+            if (event.pointerType === "mouse") startWait("hover");
           }}
-          onPointerLeave={clearHover}
-          onPointerCancel={clearHover}
-          onPointerDown={() => {
-            clearHover();
-            openedByHover.current = false;
+          onPointerLeave={() => {
+            if (waitOrigin.current === "hover") cancelWait();
           }}
-          onKeyDown={() => { openedByHover.current = false; }}
-          onBlur={clearHover}
+          onPointerCancel={cancelWait}
+          onPointerDown={(event) => {
+            if (event.pointerType === "touch") startWait("tap");
+          }}
+          onClick={() => startWait("tap")}
+          onFocus={() => {
+            if (!restoringFocus.current) startWait("focus");
+            restoringFocus.current = false;
+          }}
+          onKeyDown={(event) => {
+            if (event.key === "Escape") cancelWait();
+          }}
+          onBlur={() => {
+            restoringFocus.current = false;
+            if (waitOrigin.current === "focus") cancelWait();
+          }}
         >
           <span className="personal-spaces-dot" aria-hidden="true" />
         </button>
       </PopoverTrigger>
+      <span className="sr-only" id={hintId}>{t.hint}</span>
       <PopoverContent
         side="top"
         align="start"
@@ -78,6 +132,7 @@ export function PersonalSpaces({ language }: { language: Language }) {
         }}
         onCloseAutoFocus={(event) => {
           if (openedByHover.current) event.preventDefault();
+          else restoringFocus.current = true;
           openedByHover.current = false;
         }}
       >
@@ -88,7 +143,7 @@ export function PersonalSpaces({ language }: { language: Language }) {
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <p className="personal-spaces-discovery">{t.discovery}</p>
+          <h2 className="personal-spaces-discovery">{t.discovery}</h2>
           <ul className="personal-spaces-list">
             {personalSpaces.map((space, index) => (
               <li key={space.slug}>

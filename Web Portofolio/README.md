@@ -76,7 +76,7 @@ Saat tulisan terakhir memudar, konten Home mulai muncul melalui `ascii-reveal` d
 
 ## Ruang pribadi
 
-Titik hijau samar di samping braille footer membuka daftar ruang pribadi. Diamkan kursor di atasnya selama 1,5 detik, klik/ketuk, atau gunakan Tab lalu Enter. Panel mengikuti tema dan bahasa portofolio, memakai ASCII decode seperti halaman utama, dan bisa ditutup dengan Escape, tombol tutup, atau klik di luar. Atensi menjadi isi pertama; tambahkan ruang berikutnya di `app/personal-spaces.ts` tanpa mengganti pintu masuknya.
+Titik hijau samar di bawah lokasi Asia/Jakarta membuka daftar ruang pribadi setelah 8 detik perhatian. Diamkan kursor atau fokus keyboard pada titik; di layar sentuh, ketuk lalu tunggu. Klik sebelum waktu selesai tidak membuka panel atau mempercepat hitungan. Meninggalkan titik dengan kursor/fokus, klik di luar, atau menyembunyikan tab membatalkan hitungan; popup hanya muncul jika titik masih terlihat. Panel mengikuti tema dan bahasa portofolio, memakai ASCII decode seperti halaman utama, dan bisa ditutup dengan Escape, tombol tutup, atau klik di luar. Atensi menjadi isi pertama; tambahkan ruang berikutnya di `app/personal-spaces.ts` tanpa mengganti pintu masuknya.
 
 ## Pemeriksaan
 
