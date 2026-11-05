@@ -24,6 +24,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { usePortfolioPreferences } from "@/components/portfolio-preferences";
 import { MotionText } from "@/components/motion-text";
+import { PersonalSpaces } from "@/components/personal-spaces";
 import {
   Popover,
   PopoverContent,
@@ -656,7 +657,10 @@ function ContactFooter({
       <footer className="site-footer" data-reveal-order="12">
         <div className="footer-signature">
           <p><MotionText text={`© 2026 ${profile.name}`} /></p>
-          <span className="braille" aria-hidden="true">⠝⠁⠥⠋⠁⠇</span>
+          <div className="footer-marks" data-ascii="skip">
+            <span className="braille" aria-hidden="true">⠝⠁⠥⠋⠁⠇</span>
+            <PersonalSpaces language={language} />
+          </div>
           <div className="footer-location">
             <span>{time || "—:—"} · UTC+7</span>
             <span>{t.timezone}</span>

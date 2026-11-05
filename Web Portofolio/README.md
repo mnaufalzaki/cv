@@ -74,6 +74,10 @@ Saat tulisan terakhir memudar, konten Home mulai muncul melalui `ascii-reveal` d
 
 `components/portfolio-intro.tsx` mengatur sesi, interaksi, pemuatan GSAP, dan ASCII Reveal; `lib/portfolio-motion.ts` mengatur timeline layar intro dan latar. Intro tidak memiliki tombol Skip. Escape, Tab, atau Shift+Tab langsung menampilkan seluruh konten dan memindahkan fokus ke skip link website. Reload, navigasi, Projects, URL dengan hash, reduced motion, JavaScript mati, dan session storage yang diblokir membuka konten langsung. Pengaman sebelum hidrasi 4,5 detik berubah menjadi 12 detik setelah GSAP mulai, termasuk fade latar yang ditunda. Untuk menonton ulang, buka Home pada tab baru.
 
+## Ruang pribadi
+
+Titik hijau samar di samping braille footer membuka daftar ruang pribadi. Diamkan kursor di atasnya selama 1,5 detik, klik/ketuk, atau gunakan Tab lalu Enter. Panel mengikuti tema dan bahasa portofolio, memakai ASCII decode seperti halaman utama, dan bisa ditutup dengan Escape, tombol tutup, atau klik di luar. Atensi menjadi isi pertama; tambahkan ruang berikutnya di `app/personal-spaces.ts` tanpa mengganti pintu masuknya.
+
 ## Pemeriksaan
 
 ```bash

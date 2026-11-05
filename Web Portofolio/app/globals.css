@@ -1275,11 +1275,157 @@ html[data-theme="light"] .banner-code {
   font-size: 1rem;
 }
 
-.braille {
-  display: block;
+.footer-marks {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-top: 10px;
+}
+
+.braille {
   color: var(--muted-foreground);
   letter-spacing: 0.22em;
+}
+
+.personal-spaces-trigger {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.personal-spaces-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #7d8c55;
+  opacity: .45;
+  transition: opacity 350ms ease, box-shadow 350ms ease;
+}
+
+.personal-spaces-trigger:hover .personal-spaces-dot,
+.personal-spaces-trigger:focus-visible .personal-spaces-dot,
+.personal-spaces-trigger[data-state="open"] .personal-spaces-dot {
+  opacity: 1;
+  box-shadow: 0 0 0 5px rgb(125 140 85 / .08);
+}
+
+.personal-spaces-panel {
+  width: min(330px, calc(100vw - 40px));
+  max-height: var(--radix-popover-content-available-height);
+  overflow-y: auto;
+  padding: 20px;
+  border-color: var(--border);
+  border-radius: 12px;
+  background: var(--popover);
+  color: var(--foreground);
+  box-shadow: 0 16px 50px rgb(0 0 0 / .16);
+  --ascii-accent: #7d8c55;
+  --ascii-flash: #7d8c55;
+  --ascii-glyph: var(--muted-foreground);
+  --ascii-font: var(--font-geist-mono), monospace;
+}
+
+.personal-spaces-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.personal-spaces-eyebrow {
+  color: var(--muted-foreground);
+  font: 10px/1.5 var(--font-geist-mono), monospace;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.personal-spaces-close {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin: -8px -8px -8px 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: var(--muted-foreground);
+  background: transparent;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.personal-spaces-close:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+.personal-spaces-discovery {
+  margin: 14px 0 20px;
+  font: italic 20px/1.45 Georgia, serif;
+}
+
+.personal-spaces-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.personal-spaces-list li + li {
+  margin-top: 8px;
+}
+
+.personal-space-link {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 16px 0 2px;
+  border-top: 1px solid var(--border);
+}
+
+.personal-space-number {
+  align-self: flex-start;
+  padding-top: 4px;
+  color: #7d8c55;
+  font: 10px/1.5 var(--font-geist-mono), monospace;
+}
+
+.personal-space-copy {
+  display: grid;
+  flex: 1;
+  gap: 5px;
+  min-width: 0;
+}
+
+.personal-space-title {
+  font: 24px/1.2 Georgia, serif;
+}
+
+.personal-space-description {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.personal-space-link > svg {
+  width: 16px;
+  height: 16px;
+  color: var(--muted-foreground);
+}
+
+.personal-space-link:hover .personal-space-title,
+.personal-space-link:focus-visible .personal-space-title {
+  color: var(--signal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .personal-spaces-dot { transition: none; }
+  .personal-spaces-panel { animation: none !important; }
 }
 
 .footer-location {
