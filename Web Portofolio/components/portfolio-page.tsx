@@ -656,7 +656,7 @@ function ContactFooter({
       </section>
       <footer className="site-footer" data-reveal-order="12">
         <div className="footer-signature">
-          <p><MotionText text={`© 2026 ${profile.name}`} /></p>
+          <p><MotionText text={profile.name} /></p>
           <div className="footer-marks" data-ascii="skip">
             <span className="braille" aria-hidden="true">⠝⠁⠥⠋⠁⠇</span>
           </div>

@@ -1272,7 +1272,7 @@ html[data-theme="light"] .banner-code {
   margin: 0;
   color: var(--muted-foreground);
   font-family: "Caveat", cursive;
-  font-size: 1rem;
+  font-size: 1.125rem;
 }
 
 .footer-marks {
