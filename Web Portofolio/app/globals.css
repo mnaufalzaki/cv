@@ -1293,6 +1293,7 @@ html[data-theme="light"] .banner-code {
 }
 
 .personal-spaces-trigger {
+  position: relative;
   display: grid;
   place-items: center;
   width: 44px;
@@ -1302,6 +1303,37 @@ html[data-theme="light"] .banner-code {
   border-radius: 50%;
   background: transparent;
   cursor: pointer;
+}
+
+.personal-spaces-wait-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28px;
+  height: 28px;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  fill: none;
+  stroke: #7d8c55;
+  stroke-width: 1.4;
+  pointer-events: none;
+}
+
+.personal-spaces-wait-track {
+  opacity: .2;
+}
+
+.personal-spaces-wait-progress {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  stroke-linecap: round;
+  opacity: .85;
+  animation-name: personal-spaces-wait;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes personal-spaces-wait {
+  to { stroke-dashoffset: 0; }
 }
 
 .personal-spaces-dot {
@@ -1429,6 +1461,7 @@ html[data-theme="light"] .banner-code {
 
 @media (prefers-reduced-motion: reduce) {
   .personal-spaces-dot { transition: none; }
+  .personal-spaces-wait-progress { animation: none; }
   .personal-spaces-panel { animation: none !important; }
 }
 

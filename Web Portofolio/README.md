@@ -76,6 +76,8 @@ Saat tulisan terakhir memudar, konten Home mulai muncul melalui `ascii-reveal` d
 
 ## Ruang pribadi
 
+Saat menunggu, lingkaran tipis di sekitar titik hijau terisi mengikuti timer 8 detik yang sama. Pembatalan menghapus lingkaran dan mengulang progres dari awal; setelah waktu selesai popup terbuka. Reduced motion menampilkan lingkaran statis tanpa animasi pengisian.
+
 SAP Learning menjadi entri kedua setelah Atensi. Untuk menghubungkan preview lokal, jalankan `NEXT_PUBLIC_SAP_PREVIEW_URL=http://127.0.0.1:3004 npm run build`. Build tanpa variabel ini memakai `https://sap.naufalzaki.tech/`. Variabel hanya menerima alamat HTTP localhost/127.0.0.1, dan konfigurasi Vercel menolak deployment jika override masih terpasang. Pengaturan ini tidak mengubah jeda easter egg 8 detik.
 
 Titik hijau samar di bawah lokasi Asia/Jakarta membuka daftar ruang pribadi setelah 8 detik perhatian. Diamkan kursor atau fokus keyboard pada titik; di layar sentuh, ketuk lalu tunggu. Klik sebelum waktu selesai tidak membuka panel atau mempercepat hitungan. Meninggalkan titik dengan kursor/fokus, klik di luar, atau menyembunyikan tab membatalkan hitungan; popup hanya muncul jika titik masih terlihat. Panel mengikuti tema dan bahasa portofolio, memakai ASCII decode seperti halaman utama, dan bisa ditutup dengan Escape, tombol tutup, atau klik di luar. Atensi menjadi isi pertama; tambahkan ruang berikutnya di `app/personal-spaces.ts` tanpa mengganti pintu masuknya.

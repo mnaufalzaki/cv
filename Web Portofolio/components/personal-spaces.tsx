@@ -7,6 +7,8 @@ import { personalSpaces } from "@/app/personal-spaces";
 import type { Language } from "@/app/portfolio-data";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
+const ATTENTION_WAIT_MS = 8000;
+
 const copy = {
   id: {
     label: "Buka ruang pribadi Naufal",
@@ -57,7 +59,7 @@ export function PersonalSpaces({ language }: { language: Language }) {
       if (!visible || !stillAttending || document.visibilityState !== "visible") return;
       openedByHover.current = origin === "hover";
       setOpen(true);
-    }, 8000);
+    }, ATTENTION_WAIT_MS);
   };
 
   useEffect(() => {
@@ -115,6 +117,12 @@ export function PersonalSpaces({ language }: { language: Language }) {
             if (waitOrigin.current === "focus") cancelWait();
           }}
         >
+          {waiting && (
+            <svg className="personal-spaces-wait-ring" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+              <circle className="personal-spaces-wait-track" cx="16" cy="16" r="12" />
+              <circle className="personal-spaces-wait-progress" cx="16" cy="16" r="12" pathLength="1" style={{ animationDuration: `${ATTENTION_WAIT_MS}ms` }} />
+            </svg>
+          )}
           <span className="personal-spaces-dot" aria-hidden="true" />
         </button>
       </PopoverTrigger>
