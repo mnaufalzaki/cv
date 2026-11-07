@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
 
-if (process.env.VERCEL && process.env.NEXT_PUBLIC_SAP_PREVIEW_URL) {
-  throw new Error("Remove NEXT_PUBLIC_SAP_PREVIEW_URL before deploying to Vercel");
+if (process.env.VERCEL && (process.env.NEXT_PUBLIC_SAP_PREVIEW_URL || process.env.NEXT_PUBLIC_TOPGDP_PREVIEW_URL)) {
+  throw new Error("Remove personal space preview URLs before deploying to Vercel");
 }
 
 const nextConfig = (phase: string): NextConfig => ({
