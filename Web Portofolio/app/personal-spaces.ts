@@ -45,13 +45,4 @@ export const personalSpaces: PersonalSpace[] = [
     },
     href: personalSpaceDestination("https://topgdp.naufalzaki.tech/", process.env.NEXT_PUBLIC_TOPGDP_PREVIEW_URL),
   },
-  {
-    slug: "refleksi",
-    title: "Refleksi",
-    description: {
-      en: "Notes on persistence, ambition, and everyday progress.",
-      id: "Catatan tentang keteguhan, ambisi, dan kemajuan sehari-hari.",
-    },
-    href: personalSpaceDestination("https://refleksi.naufalzaki.tech/", process.env.NEXT_PUBLIC_REFLEKSI_PREVIEW_URL),
-  },
 ];
