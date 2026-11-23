@@ -22,16 +22,21 @@ export function createPortfolioTimeline(gsap: typeof Gsap, elements: MotionEleme
   const name = intro.querySelector<HTMLElement>(".intro-name")!;
   const portfolio = intro.querySelector<HTMLElement>(".intro-portfolio")!;
   const fontSize = parseFloat(getComputedStyle(portfolio).fontSize);
+  const stacked = window.matchMedia("(max-width: 640px)").matches;
   const gap = fontSize * 0.6;
+  const lineOffset = fontSize * 0.62;
   const portfolioWidth = portfolio.getBoundingClientRect().width;
   const toWidth = to.getBoundingClientRect().width;
   const nameWidth = name.getBoundingClientRect().width;
-  // Keep each phrase centered on one baseline. PORTFOLIO moves to make room
-  // for the longer name, while its existing DOM node stays visible.
-  const toLeft = -(toWidth + gap + portfolioWidth) / 2;
-  const nameLeft = -(nameWidth + gap + portfolioWidth) / 2;
-  const portfolioStart = toLeft + toWidth + gap;
-  const portfolioEnd = nameLeft + nameWidth + gap;
+  // On desktop, keep each phrase centered on one baseline while PORTFOLIO shifts
+  // to make room for the longer name. On narrow mobile viewports, stack the
+  // lockup into two centered lines so the typography can scale up cleanly.
+  const toLeft = stacked ? -toWidth / 2 : -(toWidth + gap + portfolioWidth) / 2;
+  const nameLeft = stacked ? -nameWidth / 2 : -(nameWidth + gap + portfolioWidth) / 2;
+  const portfolioStart = stacked ? -portfolioWidth / 2 : toLeft + toWidth + gap;
+  const portfolioEnd = stacked ? -portfolioWidth / 2 : nameLeft + nameWidth + gap;
+  const topRowY = stacked ? -lineOffset : 0;
+  const bottomRowY = stacked ? lineOffset : 0;
   const darkPalette = {
     "--intro-background": "#050505", "--intro-ink": "#f3f3ee",
     "--intro-line": "#343735", "--intro-accent": "#b9d9d3", "--intro-muted": "#999e9d",
@@ -46,9 +51,9 @@ export function createPortfolioTimeline(gsap: typeof Gsap, elements: MotionEleme
   const background = site.querySelector<HTMLElement>(".ambient-dots");
   if (background) gsap.set(background, { opacity: 0 });
   gsap.set(select(".intro-to, .intro-name, .intro-portfolio"), { opacity: 0, yPercent: 110 });
-  gsap.set(select(".intro-to-mask"), { x: toLeft });
-  gsap.set(select(".intro-name-mask"), { x: nameLeft });
-  gsap.set(select(".intro-portfolio-mask"), { x: portfolioStart });
+  gsap.set(select(".intro-to-mask"), { x: toLeft, y: topRowY });
+  gsap.set(select(".intro-name-mask"), { x: nameLeft, y: topRowY });
+  gsap.set(select(".intro-portfolio-mask"), { x: portfolioStart, y: bottomRowY });
   gsap.set(intro, darkPalette);
   gsap.set(welcome, { opacity: 0, yPercent: 115, rotation: 7, scale: 0.94 });
   gsap.set(select(".intro-rule"), { scaleX: 0 });
@@ -72,7 +77,7 @@ export function createPortfolioTimeline(gsap: typeof Gsap, elements: MotionEleme
     .set(intro, { "--intro-ink": lightInk }, secondScene + 0.27)
     .to(welcome, { yPercent: -115, opacity: 0, duration: 0.4, stagger: 0.025, ease: "power3.in" }, secondScene)
     .to(select(".intro-to"), { opacity: 1, yPercent: 0, duration: 0.7 }, secondScene + 0.3)
-    .fromTo(select(".intro-portfolio"), { xPercent: 40, yPercent: 105, opacity: 0, rotation: -3 },
+    .fromTo(select(".intro-portfolio"), { xPercent: stacked ? 0 : 40, yPercent: 105, opacity: 0, rotation: stacked ? -2 : -3 },
       { xPercent: 0, yPercent: 0, opacity: 1, rotation: 0, duration: 0.95 }, secondScene + 0.25)
     .fromTo(select(".intro-sweep"), { xPercent: -110, opacity: 0 }, { xPercent: 110, opacity: 0.65, duration: 0.9, ease: "power2.inOut" }, secondScene)
     .to(select(".intro-sweep"), { opacity: 0, duration: 0.2 }, secondScene + 0.85)
@@ -80,10 +85,14 @@ export function createPortfolioTimeline(gsap: typeof Gsap, elements: MotionEleme
     .to(intro, { ...darkSurfaces, duration: 0.55, ease: "power2.inOut" }, nameScene)
     .set(intro, { "--intro-ink": darkInk }, nameScene + 0.28)
     .to(select(".intro-to"), { yPercent: -110, opacity: 0, duration: 0.45, ease: "power3.in" }, nameScene + 0.05)
-    .to(select(".intro-to-mask"), { x: nameLeft, duration: 0.65, ease: "power3.inOut" }, nameScene)
+    .to(select(".intro-to-mask"), { x: stacked ? toLeft : nameLeft, duration: 0.65, ease: "power3.inOut" }, nameScene)
     .to(select(".intro-name"), { yPercent: 0, opacity: 1, duration: 0.8 }, nameScene + 0.35)
-    .to(select(".intro-portfolio-mask"), { x: portfolioEnd + fontSize * 0.2, duration: 0.65, ease: "power3.inOut" }, nameScene)
-    .to(select(".intro-portfolio-mask"), { x: portfolioEnd, duration: 0.45 }, nameScene + 0.65)
+    .to(select(".intro-portfolio-mask"), stacked
+      ? { y: bottomRowY + fontSize * 0.1, duration: 0.65, ease: "power3.inOut" }
+      : { x: portfolioEnd + fontSize * 0.2, duration: 0.65, ease: "power3.inOut" }, nameScene)
+    .to(select(".intro-portfolio-mask"), stacked
+      ? { y: bottomRowY, duration: 0.45 }
+      : { x: portfolioEnd, duration: 0.45 }, nameScene + 0.65)
     .to(select(".intro-rule-top"), { xPercent: 5, scaleX: 0.9, duration: 0.9 }, nameScene)
     .to(select(".intro-rule-bottom"), { xPercent: -5, scaleX: 0.9, duration: 0.9 }, nameScene)
     .call(() => { phase("fade"); onFade(); }, [], fadeStart)

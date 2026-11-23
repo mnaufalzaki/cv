@@ -1828,6 +1828,45 @@ html[data-intro="running"] .portfolio-intro { animation: intro-running-overlay-r
   transform: scaleX(0);
   transform-origin: left;
 }
+@media (max-width: 640px) {
+  .intro-binary {
+    font-size: 15px;
+  }
+  .intro-rule {
+    left: 8%;
+    right: 8%;
+  }
+  .intro-rule-top {
+    top: 26%;
+  }
+  .intro-rule-bottom {
+    bottom: 26%;
+  }
+  .intro-caption {
+    top: calc(26% - 28px);
+    left: 8%;
+    font-size: 11px;
+  }
+  .intro-corner-tl {
+    top: 30%;
+    left: 7%;
+  }
+  .intro-corner-br {
+    bottom: 30%;
+    right: 7%;
+  }
+  .intro-type {
+    width: 92vw;
+    height: 2.6em;
+    font-size: clamp(2.15rem, 11.2vw, 3.4rem);
+    line-height: 1.12;
+  }
+  .intro-progress {
+    left: 8%;
+    right: 8%;
+    bottom: calc(26% - 18px);
+  }
+}
 .motion-word {
   display: inline-block;
   max-width: 100%;
